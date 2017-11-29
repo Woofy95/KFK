@@ -1,0 +1,120 @@
+//Lucaci George, Group E_2031, Semigroup 1
+/* 1. Creați o aplicație ce preia din două câmpuri text (TextField()) numele vostru și grupa din care faceți parte și afișează
+ * această informație într-o etichetă de culoare RGB(122,123,129).
+ */
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.Label;
+import java.awt.TextField;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.awt.event.TextEvent;
+import java.awt.event.TextListener;
+ 
+class numeGrupa extends Frame implements WindowListener {
+ 
+    Label label1;
+    TextField nume;
+    TextField grupa; //textfields for inputting name and group
+   
+    numeGrupa(String title){
+        super(title);
+       
+        setLayout(new FlowLayout());
+       
+        label1 = new Label();
+        label1.setBackground(new Color(122, 123, 129));
+       
+        nume = new TextField(25);
+        grupa = new TextField(25);
+        nume.setBackground(new Color(255, 255, 255));
+        nume.addTextListener(new MyTextListener(this));
+       
+        grupa.setBackground(new Color(255, 255, 255));
+        grupa.addTextListener(new MyTextListener(this));
+       
+        this.add(nume);
+        this.add(grupa);
+        this.add(label1);
+        this.addWindowListener(this);
+       
+        setSize(300, 300);
+        setVisible(true);
+       
+    }
+   
+    public void setLabel1Text(String text){	//void method for displaying the input text into the label
+        //pt. ajustarea dimensiunilor etichetei
+        label1.invalidate();
+        label1.setText(text);
+        validate();
+    }
+       
+    public String getNumeText(){
+        return nume.getText();
+    }
+   
+    public String getGrupaText(){
+        return grupa.getText();
+    }
+   
+    @Override		//override methods for various window events, not needed now
+    public void windowActivated(WindowEvent arg0) {
+        // TODO Auto-generated method stub
+       
+    }
+    @Override
+    public void windowClosed(WindowEvent arg0) {
+        // TODO Auto-generated method stub
+       
+    }
+    @Override
+    public void windowClosing(WindowEvent arg0) {
+        System.exit(1);
+       
+    }
+    @Override
+    public void windowDeactivated(WindowEvent arg0) {
+        // TODO Auto-generated method stub
+       
+    }
+    @Override
+    public void windowDeiconified(WindowEvent arg0) {
+        // TODO Auto-generated method stub
+       
+    }
+    @Override
+    public void windowIconified(WindowEvent arg0) {
+        // TODO Auto-generated method stub
+       
+    }
+    @Override
+    public void windowOpened(WindowEvent arg0) {
+        // TODO Auto-generated method stub
+       
+    }
+}
+ 
+class MyTextListener implements TextListener{ //driver class for launching the applet
+ 
+    numeGrupa frame;
+   
+    MyTextListener(numeGrupa frame){
+        this.frame = frame;
+    }
+   
+    @Override
+    public void textValueChanged(TextEvent te) {
+        frame.setLabel1Text(frame.getNumeText() + " " +  frame.getGrupaText());
+    }
+   
+}
+ 
+public class Ex01{
+    public static void main(String...strings){
+   
+        numeGrupa frame = new numeGrupa("Nume si Grupa");
+       
+    }
+}
