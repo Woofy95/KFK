@@ -1,0 +1,122 @@
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.Label;
+import java.awt.TextField;
+import java.awt.event.TextEvent;
+import java.awt.event.TextListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
+/* Crea?i o aplica?ie ce preia din doua câmpuri text (
+TextField()) 
+numele vostru ?i grupa din care face?i parte ?i afi?eaza 
+aceasta informa?ie într
+-o eticheta de culoare RGB(122,123,129).*/
+
+
+class Test extends Frame implements WindowListener {
+	private TextField nume; // textF in care vom adauga numele
+	private TextField grupa; // textF in care vom adauga numele
+	private Label afisaj; // eticheta in care vom afisa
+
+	Test() // constructor (ce apare cand se creeaza obiectul)
+	{
+		setLayout(new FlowLayout());
+		// now I set the 2 text fields
+		nume = new TextField(25);
+		nume.addTextListener(new tl(this));
+
+		grupa = new TextField(25);
+		grupa.addTextListener(new tl(this));
+
+		// setam labelul in care va fi afisat textul si culoarea acestuia din cerinta
+		afisaj = new Label();
+		afisaj.setSize(30, 20);
+		afisaj.setBackground(new Color(122, 123, 129));
+
+		add(nume);
+		add(grupa);
+		add(afisaj);
+
+		setSize(500, 500);
+		setVisible(true);
+	}
+
+	public void setLabel1Text(String text) {
+		afisaj.invalidate();
+		afisaj.setText(text);
+		validate();
+	}// for adjusting and setting the text into the label
+
+	public String getNumeText() {
+		return nume.getText();
+	}// get the text form the nume text field
+
+	public String getGrupaText() {
+		return grupa.getText();
+	}// get the text from the grupa text field
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
+
+class tl implements TextListener {
+	Test ob1;
+
+	tl(Test ob1) {
+		this.ob1 = ob1;
+	}
+
+	@Override
+	public void textValueChanged(TextEvent e) {
+		ob1.setLabel1Text(ob1.getNumeText() + " " + ob1.getGrupaText());
+	}// metoda prin care pun in label textul meu din nume si grupa
+}
+
+
+class One{
+	public static void main(String[] args) {
+		Test ob1 = new Test();
+	}
+}
