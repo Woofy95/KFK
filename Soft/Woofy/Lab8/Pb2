@@ -1,0 +1,129 @@
+/*Creați o aplicație
+Java ce include un 3 elemente de tip slider, prin intermediul cărora se poate seta culoarea unui 
+pătrat de dimensiunea 100x100*/
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+class Square extends Frame implements WindowListener
+{
+	JSlider r;
+	JSlider g;
+	JSlider b; //the 3 sliders for red green blue adjusting
+	JPanel s; //our hacked Square
+	int red=0,green=0,blue=0; //the values which will take the r,g,b for generating the color of the sqare
+    Square(String title)
+    {
+    	
+    	super(title); //setting the title
+    	setLayout(new FlowLayout()); //putting this to see whats happening
+    	s = new JPanel(); //initialize the panel
+    	s.setPreferredSize(new Dimension(100, 100)); // size
+    	s.setBackground(new Color(red,green,blue)); // color
+    	
+    	
+    	int boundInf = 0;
+    	int boundMax = 255;
+    	int startPosition = 100; //parameters of the sliders
+    	r = new JSlider(JSlider.HORIZONTAL,boundInf,boundMax,startPosition);
+    	r.addChangeListener(new ChangeListener() { //making him a trigged for an event when its value is changed
+    		public void stateChanged(ChangeEvent e) //implementing whats going on when the value is changing
+    		{
+    			JSlider source = (JSlider)e.getSource();  
+    			if (source.getValueIsAdjusting()) //if the value is adjusting
+    			{
+    				red = (int)source.getValue(); //we give the red the new value
+    				s.setBackground(new Color(red,green,blue)); //and repaint our square
+    			}
+    		}
+    	});//red color reprezenting slider implementation
+    	g = new JSlider(JSlider.HORIZONTAL,boundInf,boundMax,startPosition);
+    	g.addChangeListener(new ChangeListener() {
+    		public void stateChanged(ChangeEvent e)
+    		{
+    			JSlider source = (JSlider)e.getSource();
+    			if (source.getValueIsAdjusting())
+    			{
+    				green = (int)source.getValue();
+    				s.setBackground(new Color(red,green,blue));
+    			}
+    		}
+    	}); // same as r
+    	b = new JSlider(JSlider.HORIZONTAL,boundInf,boundMax,startPosition);
+    	b.addChangeListener(new ChangeListener() {
+    		public void stateChanged(ChangeEvent e)
+    		{
+    			JSlider source = (JSlider)e.getSource();
+    			if (source.getValueIsAdjusting())
+    			{
+    				blue = (int)source.getValue();
+    				s.setBackground(new Color(red,green,blue));
+    			}
+    		}
+    	});//same as r
+    	this.add(r);
+    	this.add(g);
+    	this.add(b);
+    	this.add(s); //we add all this elements to our frame
+    	setVisible(true); //setting visible
+    	setSize(300, 300); // and ts dimensions
+    	this.addWindowListener(this); //making the frame to close
+    	
+    }
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		System.exit(1);
+		System.exit(0);
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	}
+
+public class Test {
+public static void main(String...string){
+	Square ob =  new Square ("Yes"); //initializing our frame
+}
+}
