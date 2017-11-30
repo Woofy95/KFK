@@ -1,1 +1,278 @@
-Here you will put your work!
+/*Candrea Sandra   Lab.8   P3
+ * 3. Write a Java application which includes a sign-up form for an online course. The form includes
+ *  information regarding the name, surname, year of study, faculty, financing (tax/budget) and the course.
+ *   The year of study, faculty and course are drop-down lists, and the financing is a check-box field. În
+ *    a TextArea field print the filled-in information after the Sign-up button is pressed.
+ */
+
+import java.awt.Button;
+import  java.awt.Color;
+import  java.awt.FlowLayout;
+import  java.awt.Frame;
+import  java.awt.Label;
+import java.awt.TextArea;
+import  java.awt.TextField;
+import  java.awt.event.WindowEvent;
+import  java.awt.event.WindowListener;
+import java.time.Year;
+
+import javax.swing.AbstractAction;
+import javax.swing.AbstractListModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import  java.awt.event.TextEvent;
+import  java.awt.event.TextListener;
+
+class  MyFrame  extends  JFrame implements  WindowListener{
+    
+        TextField  textField;
+        
+        MyFrame(){
+        	//label for the first name
+                setLayout(new  FlowLayout());
+                JLabel name = new JLabel();
+                name.setText("First name:");
+                name.setLocation(10, 10);
+                name.setSize(name.getPreferredSize());
+                add(name);  
+                
+                //text field for the first name
+                textField    =  new  TextField(20);
+                textField.setBackground(new  Color(34,67,12));
+                this.add(textField);                
+                
+                //label for the last name
+                JLabel name1 = new JLabel();
+                name1.setText("Last name:");
+                name1.setLocation(10, 20);
+                name1.setSize(name1.getPreferredSize());
+                add(name1);
+
+                //text field for the last name
+                textField    =  new  TextField(20);
+                textField.setBackground(new  Color(45,197,34));             
+                this.add(textField);
+                
+                this.addWindowListener(this);
+                setVisible(true);
+                
+                //label before the list where you can choose the year
+                JLabel name2 = new JLabel();
+                name2.setText("Choose your year:");
+                name2.setLocation(10, 70);
+                name2.setSize(name2.getPreferredSize());
+                add(name2);
+                
+                //list of years
+                JList year = new JList();
+                    //create the model and add elements
+                    DefaultListModel<String> listModel = new DefaultListModel<>();
+                    listModel.addElement("I year(L)");
+                    listModel.addElement("II year(L)");
+                    listModel.addElement("III year(L)");
+                    listModel.addElement("IV year(L)");
+                    
+                    listModel.addElement("I year(M)");
+                    listModel.addElement("II year(M)");
+
+                    listModel.addElement("I year(D)");
+                    listModel.addElement("II year(D)");
+
+
+                    //create the list
+                    year = new JList<>(listModel);
+                    add(year);
+                    add(new JScrollPane(year));
+                    
+                    //label before the second list, where you can choose the university
+                    JLabel name3 = new JLabel();
+                    name3.setText("Choose your university:");
+                    name3.setLocation(10, 70);
+                    name3.setSize(name3.getPreferredSize());
+                    add(name3);
+                    
+                    
+                    JList uni = new JList();
+                    //create the model and add elements
+                    DefaultListModel<String> listModeluni = new DefaultListModel<>();
+                    listModeluni.addElement("Architecture");
+                    listModeluni.addElement("Automatics");
+                    listModeluni.addElement("Electronics");
+                    listModeluni.addElement("Mechanical");
+
+                    //create the list
+                    uni = new JList<>(listModeluni);
+                    add(uni);
+                    add(new JScrollPane(uni));
+                    
+                    //label before the thirth list, where you can choose the university
+                    JLabel name4 = new JLabel();
+                    name4.setText("Choose your course:");
+                    name4.setLocation(10, 70);
+                    name4.setSize(name4.getPreferredSize());
+                    add(name4);
+                    
+                    
+                    JList course = new JList();
+                    //create the model and add elements
+                    DefaultListModel<String> listModelCourse = new DefaultListModel<>();
+                    listModelCourse.addElement("Special Math");
+                    listModelCourse.addElement("Programming");
+                    listModelCourse.addElement("English");
+                    listModelCourse.addElement("Mechanical");
+                    listModelCourse.addElement("Phisics");
+                    listModelCourse.addElement("German");
+                    listModelCourse.addElement("French");
+                    listModelCourse.addElement("Differential equations");
+                    listModelCourse.addElement("Algebra");
+                    listModelCourse.addElement("Analysis");
+                    listModelCourse.addElement("Electronic devices");
+                    //create the list
+                    course = new JList<>(listModelCourse);
+                    add(course);
+                    add(new JScrollPane(course));
+                    
+                    //label before the check boxes
+                    JLabel name5 = new JLabel();
+                    name5.setText("Financing:");
+                    name5.setLocation(10, 70);
+                    name5.setSize(name5.getPreferredSize());
+                    add(name5);
+                    
+                    JCheckBox buget = new JCheckBox("Buget", false);
+                    JCheckBox taxa = new JCheckBox("Taxa", false);
+                    add(buget);
+                    add(taxa);
+                    
+                    Button b1 = new Button("Sign up");
+                    add(b1);
+                    TextArea result=new TextArea();
+                    
+                    b1.addActionListener(new ActionListener() 
+            		{
+            			@Override
+            			public void actionPerformed(ActionEvent e)
+            			{
+            				
+ 
+            				if(buget.isSelected() && !taxa.isSelected())                     
+            				{
+            					result.append("Financing: " + buget.getText());
+            				}
+            				else
+            				{
+            					result.append("Financing: " + taxa.getText());
+            				}
+            			}
+            		});
+                    
+  
+                     
+                    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    this.setTitle("Form:");       
+
+                    year.setLocation(10, 80);
+                    this.setVisible(true);
+                    
+                    setSize(300,  700);
+        }
+                
+
+                
+
+                
+   
+
+
+        public  String  getTextFieldText(){
+                return  textField.getText();
+        }
+        
+        @Override
+        public  void  windowActivated(WindowEvent  arg0)  {
+                //  TODO  Auto-generated  method  stub
+                
+        }
+        @Override
+        public  void  windowClosed(WindowEvent  arg0)  {
+                //  TODO  Auto-generated  method  stub
+                
+        }
+        @Override
+        public  void  windowClosing(WindowEvent  arg0)  {
+                System.exit(1);
+                
+        }
+        @Override
+        public  void  windowDeactivated(WindowEvent  arg0)  {
+                //  TODO  Auto-generated  method  stub
+                
+        }
+        @Override
+        public  void  windowDeiconified(WindowEvent  arg0)  {
+                //  TODO  Auto-generated  method  stub
+                
+        }
+        @Override
+        public  void  windowIconified(WindowEvent  arg0)  {
+                //  TODO  Auto-generated  method  stub
+                
+        }
+        @Override
+        public  void  windowOpened(WindowEvent  arg0)  {
+                //  TODO  Auto-generated  method  stub
+                
+        }
+        
+        
+}
+
+class  MyTextListener  implements  TextListener{
+
+        MyFrame  frame;
+        
+        MyTextListener(MyFrame  frame){
+                this.frame  =  frame;
+        }
+
+        @Override
+        public  void  textValueChanged(TextEvent  e)  {
+                //  TODO  Auto-generated  method  stub
+                
+        }
+        
+        
+}
+
+class CheckboxAction extends AbstractAction {
+    public CheckboxAction(String text) {
+        super(text);
+    }
+ 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JCheckBox cbLog = (JCheckBox) e.getSource();
+        if (cbLog.isSelected()) {
+            System.out.println("Logging is enabled");
+        } else {
+            System.out.println("Logging is disabled");
+        }
+    }
+}
+
+class  Formular{
+        public  static  void  main(String...strings){
+        
+                MyFrame  frame  =  new  MyFrame();
+
+                
+        }
+}
