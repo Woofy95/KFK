@@ -1,0 +1,154 @@
+/* Cristian Cauni, Group E_2031
+ * Write a Java application which includes a sign-up form for an online course. 
+ * The form includes information regarding the name, surname, year of study, 
+ * faculty, financing (tax/budget) and the course. The year of study, faculty 
+ * and course are drop-down lists, and the financing is a check-box field. 
+ * In a TextArea field print the filled-in information after the Sign-up button 
+ * is pressed. 
+ * */
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+@SuppressWarnings("serial")
+class Form extends Frame implements WindowListener
+{
+	JPanel form;
+	JTextField name;
+	JComboBox<String> year;
+	JComboBox<String> faculty; // Combo boxes represent drop-down menus
+	JComboBox<String> course;
+	String[] yr = {"1","2","3","4"}; // Strings used to initialize the drop-down menus, they use the options presented in the string
+	String[] fac = {"Electronics and Telecommunication","Computer Science","Electrical Engineering","Construction","Architecture"};
+	String[] crs = {"Programming Course", "Electronics Course", "Entrepreneuring Course"};
+	TextArea info; // This is where we will put all the information we gathered
+	Button b;      // Button for collecting information
+	JCheckBox buget; // Check boxes for selecting the financing option
+	JCheckBox taxa;
+	
+	private final static String newline = "\n"; // Newline string used in appending information to the text area
+	
+	Form(String title)
+	{
+		super(title);
+		setLayout(new GridLayout(0,1)); // Grid layout used for putting components one below the other (makes them same size)
+		
+		form = new JPanel(new GridLayout(0,1)); // JPanel used for adding everything but the text area we show the information on
+		
+		buget = new JCheckBox("Budget");
+		buget.addActionListener(new ActionListener() 
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) // Deselects the other checkbox if one is selected (can't be taxa AND buget)
+			{
+				if(buget.isSelected()==true)
+				{
+					taxa.setSelected(false);
+				}
+			}
+		});
+		
+		taxa = new JCheckBox("Tax");
+		taxa.addActionListener(new ActionListener() 
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) // Same as above
+			{
+				if(taxa.isSelected()==true)
+				{
+					buget.setSelected(false);
+				}
+			}
+		});
+		
+		info = new TextArea(1,5);
+		JScrollPane sp = new JScrollPane(info); // Adding the text area and making it scrollable in case we have too much info
+		                                        // Makes it one row and 5 columns
+		info.setEditable(false);                // Forbid editing of the information panel
+
+		year = new JComboBox<String>(yr);
+		year.setBorder(BorderFactory.createTitledBorder("Year of study"));
+		
+		faculty = new JComboBox<String>(fac);
+		faculty.setBorder(BorderFactory.createTitledBorder("Faculty"));
+		
+		course = new JComboBox<String>(crs);
+		course.setBorder(BorderFactory.createTitledBorder("Wanted course"));
+		
+		name = new JTextField();
+		name.setBorder(BorderFactory.createTitledBorder("Name and surname")); // Adding names that are visible so you know what to do
+		
+		b = new Button("Submit form");
+		b.addActionListener(new ActionListener() 
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				info.setText(null);
+				info.append("Name and surname: " + name.getText()+newline);
+				info.append("Faculty: " + faculty.getSelectedItem() + newline);       // Everything happens here. Takes all the information
+				info.append("Year of study: " + year.getSelectedItem() + newline);    // from every component and adds it to the text area
+				if(buget.isSelected() && !taxa.isSelected())                          // but clears it first, so we don't get duplicates
+				{
+					info.append("Financing: " + buget.getText()+newline);
+				}
+				else
+				{
+					info.append("Financing: " + taxa.getText()+newline);
+				}
+				info.append("Wanted course: " + course.getSelectedItem() + newline);	
+			}
+		});
+		
+		form.add(name);
+		form.add(year);
+		form.add(faculty);
+		form.add(course);
+		form.add(year);      // Adding everything to the JPanel besides the text area where we show the information
+		form.add(buget);
+		form.add(taxa);
+		form.add(b);
+		this.add(form); // Adding the JPanel to the frame
+		this.add(info); // Adding the text area to the frame
+
+		this.addWindowListener(this);
+		this.setSize(500,700);
+		setResizable(false);
+		setVisible(true);	
+	}
+	
+	
+	
+	@Override
+	public void windowOpened(WindowEvent e) {}
+
+	@Override
+	public void windowClosing(WindowEvent e) 
+	{
+		System.exit(1);
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {}
+
+	@Override
+	public void windowIconified(WindowEvent e) {}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {}
+
+	@Override
+	public void windowActivated(WindowEvent e) {}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {}
+}
+
+class Main
+{
+	public static void main(String[] args)
+	{
+		Form ob1 = new Form("Form");
+	}
+}
