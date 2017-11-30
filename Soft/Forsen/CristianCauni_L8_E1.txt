@@ -1,0 +1,109 @@
+/* Cristian Cauni - Group E_2031
+ * Create an application which takes from two text fields your name and 
+ * the group you are part of and displays this info in a label colored 
+ * in RGB(122,123,129). 
+ * */
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+class LabelShow extends Frame implements WindowListener // Extends Frame pentru window, implements WindowListener pentru exit on "X"
+{
+	JPanel panel; // Panel-ul principal
+	TextField name; // Text fields pentru nume si grupa
+	TextField group;
+	Label label; // Label in care afisam informatiile preluate din textbox-uri
+	String n = new String(); // Variabile de tip String pentru preluarea textului din textbox-uri
+	String g = new String();
+	
+	LabelShow(String title)
+	{
+		super(title); // Preia varibila de tip string din constructor si seteaza titlul ferestrei
+		setLayout(new FlowLayout()); // Layout principal al ferestrei
+		label = new Label("Input name and group.");
+		label.setBackground(new Color(122,123,129));  // Initializam label-ul cu un text, o culoare si o dimensiune fixa
+		label.setPreferredSize(new Dimension(260,20));
+		
+		name = new TextField(15); // Initializam primul textbox (nume) si adaugam un text listener
+		name.addTextListener(new TextListener() 
+		{
+			public void textValueChanged(TextEvent e) // Cand se schimba textul din textbox, se intampla instructiunile de mai jos
+			{
+				n = name.getText();
+				g = group.getText();
+				label.setText("Hello " + n + "! " + "Your group is " + g + "!");
+			}
+		});
+		
+		group = new TextField(15); // Idem ca pentru nume
+		group.addTextListener(new TextListener() 
+		{
+			public void textValueChanged(TextEvent e)
+			{
+				n = name.getText();
+				g = group.getText();
+				label.setText("Hello " + n + "! " + "Your group is " + g + "!");
+			}
+		});
+		
+		this.add(name);
+		this.add(group); // Adaugam componentele in frame
+		this.add(label, BorderLayout.SOUTH);
+		this.addWindowListener(this); // Window listener pentru exit on "X"
+		
+		
+		setSize(300,100); // Setam o marime preferata
+		setVisible(true); // Setam window-ul vizibil
+		setResizable(false); // Interzicem resize-ul (fullscreen inca merge)
+	}
+	
+	public void windowClosing(WindowEvent arg0)
+	{
+		System.exit(1); // Exit on pressing "X" method
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+}
+
+class Main
+{
+	public static void main(String[] args)
+	{
+		LabelShow c1 = new LabelShow("Label Show"); // Instantiem un obiect de tip LabelShow cu constructorul explicit pentru titlu
+	}
+}
