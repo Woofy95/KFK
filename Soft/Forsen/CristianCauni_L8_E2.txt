@@ -1,0 +1,154 @@
+/* Cristian Cauni, Group E_2031
+ * Write a Java application which includes 3 sliders which enables 
+ * the user to set the color of a 100x100 square.
+ * */
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.event.*;
+
+class SquareColor extends Frame implements WindowListener // Extends frame pentru window-ul vizibil, implements WindowListener pentru exit on pressing X
+{
+	int min = 0;
+	int max = 255; // Marimi pentru initializarea sliderelor
+	int mid = 100;
+	
+	int r = 0;
+	int g = 0;  // Variabile pentru preluarea valorii fiecarui slider (Red, Green, Blue)
+	int b = 0;
+	
+	JSlider red;
+	JSlider green;  // Slidere aferente fiecarei culori
+	JSlider blue;
+	
+	JPanel square; // Folosim un JPanel ca si "patrat"
+	
+	public SquareColor(String title) // String title este o variabila pentru constructorul implicit, da titlul ferestrei
+	{
+		super(title); // Metoda pentru invocarea constructorului implicit care seteaza titlul ferestrei
+		setLayout(new FlowLayout()); // Layout unde plasam componentele
+		square = new JPanel(); // Initializarea "patratului"
+		square.setPreferredSize(new Dimension(100,100));  // Setam dimensiune fixa pentru patrat (100x100)
+		square.setBackground(new Color(mid,mid,mid));    // Setam culoarea initiala la un parametru RGB cu valoarea 100,100,100
+		
+		red = new JSlider(JSlider.HORIZONTAL,min,max,mid); // Primul slider, pentru culoarea rosie
+		red.setBorder(BorderFactory.createTitledBorder("Red"));  // Adaugam titlu la slider
+		red.setMajorTickSpacing(50);  // Setam din cate in cate valori sa arate un label
+		red.setMinorTickSpacing(1);   // Setam cu cat sa avanseze minim sliderul
+		red.setPaintTicks(true);      // Setam "major ticks" true, adica din 50 in 50 de unitati sa apara un label
+		red.setPaintLabels(true);     // Afisam "major ticks"
+		red.addChangeListener(new ChangeListener() // Listener care "asculta" ce se intampla cand sliderul este modificat
+		{
+			public void stateChanged(ChangeEvent e) 
+			{
+				JSlider source = (JSlider)e.getSource();
+			    if (source.getValueIsAdjusting()) // Daca ajustam sliderul, se intampla instructiunile din acolada
+			    {
+			        r = (int)source.getValue(); // Preluam valoarea in variabila r (rosu)
+			        square.setBackground(new Color(r,g,b)); // Setam culoarea de background la "patrat" (JPanel)
+			    }
+			}
+		});
+		
+		green = new JSlider(JSlider.HORIZONTAL,min,max,mid); // Idem mai sus, dar verde
+		green.setBorder(BorderFactory.createTitledBorder("Green"));
+		green.setMajorTickSpacing(50);
+		green.setMinorTickSpacing(1);
+		green.setPaintTicks(true);
+		green.setPaintLabels(true);
+		green.addChangeListener(new ChangeListener() 
+		{
+			public void stateChanged(ChangeEvent e) 
+			{
+				JSlider source = (JSlider)e.getSource();
+			    if (source.getValueIsAdjusting()) 
+			    {
+			        g = (int)source.getValue();
+			        square.setBackground(new Color(r,g,b));
+			    }
+			}
+		});
+		
+		blue = new JSlider(JSlider.HORIZONTAL,min,max,mid); // Idem mai sus, dar albastru
+		blue.setBorder(BorderFactory.createTitledBorder("Blue"));
+		blue.setMajorTickSpacing(50);
+		blue.setMinorTickSpacing(1);
+		blue.setPaintTicks(true);
+		blue.setPaintLabels(true);
+		blue.addChangeListener(new ChangeListener() 
+		{
+			public void stateChanged(ChangeEvent e) 
+			{
+				JSlider source = (JSlider)e.getSource();
+			    if (source.getValueIsAdjusting()) 
+			    {
+			        b = (int)source.getValue();
+			        square.setBackground(new Color(r,g,b));
+			    }
+			}
+		});	
+		
+		this.add(red);
+		this.add(green);
+		this.add(blue);   // Adaugam componentele
+		this.add(square);
+		
+		this.addWindowListener(this); // Adaugam window listener, unde metoda windowClosing este suprascrisa cu System.exit(1)
+		                              // ca sa iasa din program cand apasam X
+		
+		setSize(300,400);  // Setam o marime preferata la fereastra
+		setVisible(true);  // Setam fereastra vizibila
+		setResizable(false); // Interzicem resize-ul (fullscreen button still works though)
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) // Metoda suprascrisa pentru iesire din program la apasarea "X"
+	{
+		System.exit(1);
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+}
+
+class GUI
+{
+	public static void main(String[] args)
+	{
+		SquareColor test = new SquareColor("Test"); // Declaratie clasa cu constructor cu parametru String, care da titlul
+	}
+}
