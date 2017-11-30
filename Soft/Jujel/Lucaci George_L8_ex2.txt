@@ -1,0 +1,111 @@
+//Lucaci George, Group E_2031, Semigroup 1
+/* Write a Java application which includes 3 sliders which enables 
+ * the user to set the color of a 100x100 square.
+ */
+
+import java.awt.BorderLayout;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.GridLayout;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+public class ColorValueSliderControl extends JFrame { //extends JFrame for visualizing the changes
+    public ColorValueSliderControl() { //method for handling the slider control
+        getContentPane().add(new TColor());
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(500, 500); //size of window
+        setVisible(true); //enable the visibility of the elements implementing this method
+    }
+
+    public static void main(String arg[]) {
+        new ColorValueSliderControl();
+    }
+}
+
+class TColor extends JPanel { //class that does the coloring of the square
+    DrawingCanvas canvas = new DrawingCanvas();
+    JLabel rgbValue = new JLabel("");
+
+    JSlider sliderR, sliderG, sliderB;
+
+    public TColor() {
+        sliderR = getSlider(0, 255, 0, 50, 5); //values between 0-255, with the major changes happening every 50 ticks and the minimum change is 5 ticks
+        sliderG = getSlider(0, 255, 0, 50, 5);
+        sliderB = getSlider(0, 255, 0, 50, 5);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(6, 2, 15, 0)); //grid formatting using rows and columns
+
+        panel.add(new JLabel("R-G-B Sliders (0 - 255)"));
+        panel.add(sliderR);
+        panel.add(sliderG); //adding the sliders to the panel
+        panel.add(sliderB);
+
+
+        panel.add(new JLabel("RGB Value: ", JLabel.RIGHT));
+
+        rgbValue.setBackground(Color.white);
+        rgbValue.setForeground(Color.black);
+        rgbValue.setOpaque(true);
+        panel.add(rgbValue);
+
+        add(panel, BorderLayout.SOUTH);
+        add(canvas);
+    }
+
+    public JSlider getSlider(int min, int max, int init, int mjrTkSp, int mnrTkSp) { //method for implementing the sliders
+        JSlider slider = new JSlider(JSlider.HORIZONTAL, min, max, init);
+        slider.setPaintTicks(true);
+        slider.setMajorTickSpacing(mjrTkSp);
+        slider.setMinorTickSpacing(mnrTkSp);
+        slider.setPaintLabels(true);
+        slider.addChangeListener(new SliderListener());
+        return slider;
+    }
+
+    class DrawingCanvas extends Canvas { //class which takes the slider values and uses them to color the canvas, or the 100x100 square we need
+        Color color;
+        int redValue, greenValue, blueValue;
+        int alphaValue = 255;
+
+        public DrawingCanvas() {
+            setSize(100, 100); //setting the size of the canvas
+            color = new Color(0, 0, 0); //initialize the square color with 0-0-0, or black
+            setBackgroundColor();
+        }
+
+        public void setBackgroundColor() {
+            color = new Color(redValue, greenValue, blueValue);
+            setBackground(color);
+        }
+    }
+
+    class SliderListener implements ChangeListener { //listener that listens for any change in the slider values
+        public void stateChanged(ChangeEvent e) {
+            JSlider slider = (JSlider) e.getSource();
+
+            if (slider == sliderR) {
+                canvas.redValue = slider.getValue();
+                displayRGBColor();
+            } else if (slider == sliderG) {
+                canvas.greenValue = slider.getValue();
+                displayRGBColor();
+            } else if (slider == sliderB) {
+                canvas.blueValue = slider.getValue();
+                displayRGBColor();
+            }
+            canvas.repaint();
+        }
+
+        public void displayRGBColor() {
+            canvas.setBackgroundColor();
+            rgbValue.setText(Integer.toString(canvas.color.getRGB() & 0xffffff, 16));
+        }
+    }
+}
