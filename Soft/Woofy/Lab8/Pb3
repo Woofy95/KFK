@@ -1,0 +1,126 @@
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+
+/*Scrieți o aplicație Java ce include un formular de înregistrare ca și student la un curs online. Formularul include 
+informații referitoare la nume, prenume, an de studii, facultatea, finanțare taxă/buget și cursul dorit. Anul de studii, 
+facultatea și cursul sunt disponibile ca și listă de opțiuni, iar finanțarea este de tip checkbox. Într-un câmp de tip 
+TextArea afișați informația completată de student ca urmare a apăsării butonului de înregistrare*/
+
+class Formular extends JFrame
+{
+	JTextArea numePrenume;
+	JComboBox <String>an;
+	JComboBox <String>facultate;
+	JComboBox <String>curs;
+	JButton inregistrare;
+	JCheckBox finantareBuget, finantareTaxa;
+	JTextArea formular;
+	
+	public Formular(){
+		super();
+		initUI();
+	}
+	
+	private void initUI()
+	{
+		setSize(new Dimension(400, 400));
+		setTitle("Formular");
+		setLayout(null);
+		setVisible(true);
+		
+		//nume si prenume
+		numePrenume = new JTextArea(2, 25);
+		numePrenume.setBounds(10, 10, 100, 30);
+		add(numePrenume);
+		
+		
+		//anul de stiudiu
+		an = new JComboBox<String>();
+		an.setBounds(10, 40, 100, 30);
+		an.addItem("Anul 1");
+		an.addItem("Anul 2");
+		an.addItem("Anul 3");
+		an.addItem("Anul 4");
+		add(an);
+		
+		
+		//facultatea
+		facultate = new JComboBox<String>();
+		facultate.setBounds(10, 70, 100, 30);
+		facultate.addItem("ETTI");
+		facultate.addItem("AC");
+		facultate.addItem("IE");
+		add(facultate);
+		
+		//curs
+		curs = new JComboBox<String>();
+		curs.setBounds(10, 100, 100, 30);
+		curs.addItem("Curs 1");
+		curs.addItem("Curs 2");
+		curs.addItem("Curs 3");
+		add(curs);
+		
+		//finantare
+		finantareBuget = new JCheckBox();
+		finantareBuget.setBounds(10, 130, 100, 30);
+		finantareBuget.setText("Buget");
+		add(finantareBuget);
+		finantareTaxa = new JCheckBox();
+		finantareTaxa.setBounds(10, 150, 100, 30);
+		finantareTaxa.setText("Taxa");
+		add(finantareTaxa);
+		
+		
+		
+		formular = new JTextArea();
+		add(formular);
+		
+		inregistrare  = new JButton("Inregistreaza-te");
+		inregistrare.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent evt) {
+                    button1Apasat(evt); }
+           });
+		inregistrare.setBounds(10, 180, 100, 30);
+		add(inregistrare);	
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	private void button1Apasat(ActionEvent evt) // here the event that put in the text area the informations
+	{
+		formular.setBounds(300, 50, 300, 300);
+		formular.setText((String)numePrenume.getText() + "\n" + (String)an.getSelectedItem() 
+					+"\n" + (String)facultate.getSelectedItem() 
+					+"\n" + (String)curs.getSelectedItem() );
+				if(finantareBuget.isSelected())
+				{
+					formular.setText((String)numePrenume.getText() + "\n" + (String)an.getSelectedItem() 
+					+"\n" + (String)facultate.getSelectedItem() 
+					+"\n" + (String)curs.getSelectedItem() +"\n"+"Buget");
+				}else
+					if(finantareTaxa.isSelected())
+					{
+						formular.setText((String)numePrenume.getText() + "\n" + (String)an.getSelectedItem() 
+						+"\n" + (String)facultate.getSelectedItem() 
+						+"\n" + (String)curs.getSelectedItem()+"\n"+"Taxa" );
+					}
+				
+	}
+	
+}
+
+
+
+public class Test {
+	public static void main(String...string) {
+    Formular ob1 = new Formular();
+    ob1.setVisible(true);
+	}
+}
