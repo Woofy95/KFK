@@ -1,0 +1,16 @@
+1) Creating a variable of type file:
+ File x = new File("Here you put the path where your file is");
+
+2) Verify if it exists
+ if(x.exists());
+ 
+3) Creating a file using Formatter
+ final Formatter x;
+ 
+ try{
+      x = new Formatter("Florin.txt"); // if the file does not exists it creates the file
+      System.out.println("You created a file");
+      }
+catch(Exception e){
+      System.out.println("you got an error");
+}
