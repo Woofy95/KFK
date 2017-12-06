@@ -1,0 +1,34 @@
+Comenzi:
+
+1) MOVSB ds:[si] -> es:[di] => mute din si in di si face increment la amandoua
+2) LODSB ds:[si] -> al => pui din memorie in registru,  face increment la si
+3) STOSB al -> es:[di] => pui din registru in memorie,  face increment la di
+4) CMPSB [si]~[di], memorie cu memorie 
+5) SCASB al ~ [di], registru cu memorie
+
+Jumps:
+1) jmp - simple jump
+2) jl / jle - jump if less
+3) jg / jge - jump if greater
+4) jz / jnz - jump if/if not zero
+
+Operatii aritmetice:
+1) mul
+- pe cine vrei sa inmultesti pui in al
+- cu cine vrei sa inmultesti pui in bl
+mul bl -> ax = bl * al
+
+2) div
+- pe cine vrei sa inmultesti pui in ax
+- cu cine vrei sa inmultesti pui in bx
+cat in dx si rest in ax
+
+3) al = [00000101]
+shl al,2 //al = [00010100] 
+shr al,2 //  
+
+
+
+For example for going through strings, we have to use pointers
+pointers: di, si, bx
+          es, ds
