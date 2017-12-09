@@ -1,0 +1,190 @@
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+
+/*1. Scrieți o aplicație Java folosind biblioteca Swing în cadrul căreia sunt afișate 3 componente de tip checkbox 
+(JCheckBox), 3 componente de tip radio button (JRadioButton) și 3 componente de tip drop-down list (JComboBox).
+Selecțiile făcute de utilizatorvor fi afișateîntr-un câmp de tip etichetă (JLabel).*/
+public class Pb1 extends JFrame {
+	public JCheckBox cbox1 = new JCheckBox();
+	public JCheckBox cbox2 = new JCheckBox();
+	public JCheckBox cbox3 = new JCheckBox();
+	public JRadioButton rButton1 = new JRadioButton();
+	public JRadioButton rButton2 = new JRadioButton();
+	public JRadioButton rButton3 = new JRadioButton();
+	public JComboBox cBox1 = new JComboBox();
+	public JComboBox cBox2 = new JComboBox();
+	public JComboBox cBox3 = new JComboBox();
+	public JLabel l1 = new JLabel();
+	public JLabel l2 = new JLabel();
+	public JLabel l3 = new JLabel();
+	public JLabel lp = new JLabel();
+
+	public Pb1() {
+		Toolkit tk = Toolkit.getDefaultToolkit();
+		Dimension dim = tk.getScreenSize();
+		int xPos = (dim.width / 2) - (this.getWidth() / 2);
+		int yPos = (dim.height / 2) - (this.getHeight() / 2);
+
+		this.setSize(400, 400);
+		this.setLocation(xPos, yPos);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setVisible(true);
+		this.setLocationRelativeTo(null);
+		JPanel mainPanel2 = new JPanel();
+		JPanel mainPanel = new JPanel();
+		JPanel thePanel2 = new JPanel();
+		JPanel thePanel = new JPanel();
+		JPanel thePanel3 = new JPanel();
+		JPanel panelForText = new JPanel();
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		mainPanel2.setLayout(new BoxLayout(mainPanel2, BoxLayout.X_AXIS));
+		mainPanel.add(thePanel);
+		mainPanel.add(thePanel2);
+		mainPanel.add(thePanel3);
+		mainPanel2.add(mainPanel);
+		mainPanel2.add(panelForText);
+		String d1 = "Luni";
+		String d2 = "Marti";
+		String d3 = "Miercuri";
+		String m1 = "Ianuarie";
+		String m2 = "Februarie";
+		String m3 = "Martie";
+		int y1 = 2000;
+		int y2 = 2001;
+		int y3 = 2002;
+
+		// cBox
+		cBox1.addItem(d1);
+		cBox1.addItem(d2);
+		cBox1.addItem(d3);
+		thePanel.add(cBox1);
+		cBox2.addItem(m1);
+		cBox2.addItem(m2);
+		cBox2.addItem(m3);
+		thePanel.add(cBox2);
+		cBox3.addItem(y1);
+		cBox3.addItem(y2);
+		cBox3.addItem(y3);
+		thePanel.add(cBox3);
+		ListenForCBox lForCBox = new ListenForCBox();
+		cBox1.addActionListener(lForCBox);
+		cBox2.addActionListener(lForCBox);
+		cBox3.addActionListener(lForCBox);
+		// end CBOX
+		lp.setText(l1.getText() + " " + l2.getText() + " " + l3.getText());
+		panelForText.add(lp);
+
+		// Rbutton
+		ButtonGroup Group = new ButtonGroup();
+		rButton1.setText("ETTI");
+		rButton2.setText("AC");
+		rButton3.setText("IE");
+		Group.add(rButton1);
+		Group.add(rButton2);
+		Group.add(rButton3);
+		ListenForRButton lForRButton = new ListenForRButton();
+		rButton1.addActionListener(lForRButton);
+		rButton2.addActionListener(lForRButton);
+		rButton3.addActionListener(lForRButton);
+		thePanel2.add(rButton1);
+		thePanel2.add(rButton2);
+		thePanel2.add(rButton3);
+		// end RButoon
+
+		// cbox's
+		cbox1.setText("one");
+		cbox2.setText("two");
+		cbox3.setText("three");
+		thePanel3.add(cbox1);
+		thePanel3.add(cbox2);
+		thePanel3.add(cbox3);
+		ListenForcbox1 lForcbox = new ListenForcbox1();
+		cbox1.addActionListener(lForcbox);
+		cbox2.addActionListener(lForcbox);
+		cbox3.addActionListener(lForcbox);
+		// end cbox
+		lp.setText(l1.getText() + " " + l2.getText() + " " + l3.getText());
+		this.add(mainPanel2);
+	}
+
+	public static void main(String[] args) {
+		new Pb1();
+	}
+
+	class ListenForCBox implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == cBox1) {
+				l3.setText((String) cBox1.getSelectedItem().toString());
+			}
+			if (e.getSource() == cBox2) {
+				l3.setText((String) cBox2.getSelectedItem().toString());
+			}
+			if (e.getSource() == cBox3) {
+				l3.setText((String) cBox3.getSelectedItem().toString());
+			}
+			lp.setText(l1.getText() + " " + l2.getText() + " " + l3.getText());
+		}
+
+	}// end of Pb1
+
+	class ListenForRButton implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == rButton1) {
+				l2.setText(rButton1.getText());
+			}
+			if (e.getSource() == rButton2) {
+				l2.setText(rButton2.getText());
+			}
+			if (e.getSource() == rButton3) {
+				l2.setText(rButton3.getText());
+			}
+			lp.setText(l1.getText() + " " + l2.getText() + " " + l3.getText());
+		}
+
+	}
+
+	class ListenForcbox1 implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if (cbox1.isSelected() && cbox2.isSelected() && cbox3.isSelected()) {
+				l1.setText(cbox1.getText() + " " + cbox2.getText() + " " + cbox3.getText());
+			}
+			if (!(cbox1.isSelected() && cbox2.isSelected() && cbox3.isSelected())) {
+				l1.setText(" ");
+			}
+			if (cbox1.isSelected() && !cbox2.isSelected() && !cbox3.isSelected()) {
+				l1.setText(cbox1.getText());
+			}
+			if (!cbox1.isSelected() && cbox2.isSelected() && !cbox3.isSelected()) {
+				l1.setText(cbox2.getText());
+			}
+			if (!cbox1.isSelected() && !cbox2.isSelected() && cbox3.isSelected()) {
+				l1.setText(cbox3.getText());
+			}
+			if (cbox1.isSelected() && cbox2.isSelected() && !cbox3.isSelected()) {
+				l1.setText(cbox1.getText() + " " + cbox2.getText());
+			}
+			if (cbox1.isSelected() && !cbox2.isSelected() && cbox3.isSelected()) {
+				l1.setText(cbox3.getText() + " " + cbox1.getText());
+			}
+			if (!cbox1.isSelected() && cbox2.isSelected() && cbox3.isSelected()) {
+				l1.setText(cbox3.getText() + " " + cbox2.getText());
+			}
+			lp.setText(l1.getText() + " " + l2.getText() + " " + l3.getText());
+		}
+
+	}
+
+}
