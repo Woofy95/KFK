@@ -1,0 +1,53 @@
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
+/*Scrieți o aplicație Java ce permite prin intermediul bibliotecii Swing selectarea unui fișier din sistemul local de fișiere.
+Se pot selecta mai multe fișiere, iar denumirea lor alături de calea completă va fi afișată într-o componentă de tip
+etichetă (JLabel).*/
+public class Pb2 extends JFrame {
+	Pb2()
+	{
+		Toolkit tk = Toolkit.getDefaultToolkit();
+		Dimension dim = tk.getScreenSize();
+		int xPos = (dim.width / 2) - (this.getWidth() / 2);
+		int yPos = (dim.height / 2) - (this.getHeight() / 2);
+		
+		this.setSize(600, 600);
+		this.setLocation(xPos,yPos);
+		this.setLocationRelativeTo(null);
+		this.setTitle("Get path of a file");
+		this.setVisible(true);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JPanel panel = new JPanel();
+		JLabel l = new JLabel();
+		JLabel l2 = new JLabel();
+	    panel.add(l);
+	    panel.add(l2); 
+	    this.add(panel);
+		
+		
+		JFileChooser chooser = new JFileChooser();
+	    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+	        "JPG & GIF Images", "jpg", "gif", "txt");
+	    chooser.setFileFilter(filter);
+	    int returnVal = chooser.showOpenDialog(getParent());
+	    if(returnVal == JFileChooser.APPROVE_OPTION) {
+	       l.setText("You chose to open this file: " + chooser.getSelectedFile().getName() );
+	       l2.setText("The path of the file is: " + chooser.getSelectedFile().getAbsolutePath());
+	    }
+	}
+	
+	public static void main(String...string)
+	{
+		new Pb2();
+	}
+	
+	}
+
+
+
