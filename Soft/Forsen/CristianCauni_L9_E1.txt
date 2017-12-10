@@ -1,0 +1,161 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+class CompTest extends JFrame
+{
+	private JPanel jPanel;
+	private JCheckBox cb1;
+	private JCheckBox cb2;
+	private JCheckBox cb3;
+	private JRadioButton rb1;
+	private JRadioButton rb2;
+	private JRadioButton rb3;
+	private JComboBox jcb1;
+	private JComboBox jcb2;
+	private JComboBox jcb3;
+	private JLabel label;
+	
+	private String[] c1 = {"One", "Two", "Three"};
+	private String[] c2 = {"A", "B", "C"};
+	private String[] c3 = {"Alpha","Beta","Gamma"};
+	
+	public CompTest()
+	{
+		setSize(new Dimension(400,400));
+		setTitle("Component Test");
+		setLayout(null);
+		
+		cb1 = new JCheckBox("CheckBox1");
+		cb2 = new JCheckBox("CheckBox2");
+		cb3 = new JCheckBox("CheckBox3");
+		rb1 = new JRadioButton("Radio1");
+		rb2 = new JRadioButton("Radio2");
+		rb3 = new JRadioButton("Radio3");
+		jcb1 = new JComboBox(c1);
+		jcb2 = new JComboBox(c2);
+		jcb3 = new JComboBox(c3);
+		
+		cb1.setBounds(50,50,100,30);
+		add(cb1);
+		cb2.setBounds(50,100,100,30);
+		add(cb2);
+		cb3.setBounds(50,150,100,30);
+		add(cb3);
+		
+		rb1.setBounds(150,50,100,30);
+		add(rb1);
+		rb2.setBounds(150,100,100,30);
+		add(rb2);
+		rb3.setBounds(150,150,100,30);
+		add(rb3);
+		
+		jcb1.setBounds(250,50,100,30);
+		add(jcb1);
+		jcb2.setBounds(250,100,100,30);
+		add(jcb2);
+		jcb3.setBounds(250,150,100,30);
+		add(jcb3);
+		
+		label = new JLabel("Label");
+		label.setBounds(150,200,150,30);
+		add(label);
+		
+		cb1.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+					cb2.setSelected(false);
+					cb3.setSelected(false);
+				label.setText("CheckBox1 ticked");
+			}
+		});
+		
+		cb2.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				cb1.setSelected(false);
+				cb3.setSelected(false);
+				label.setText("CheckBox2 ticked");
+			}
+		});
+		
+		cb3.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				cb1.setSelected(false);
+				cb2.setSelected(false);
+				label.setText("CheckBox3 ticked");
+			}
+		});
+		
+		rb1.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				rb2.setSelected(false);
+				rb3.setSelected(false);
+				label.setText("RadioButton1 selected");
+			}
+		});
+		
+		rb2.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				rb1.setSelected(false);
+				rb3.setSelected(false);
+				label.setText("RadioButton2 selected");
+			}
+		});
+		
+		rb3.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				rb1.setSelected(false);
+				rb2.setSelected(false);
+				label.setText("RadioButton3 selected");
+			}
+		});
+		
+		jcb1.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				label.setText("Drop-down menu 1 opened");
+			}
+		});
+		
+		jcb2.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				label.setText("Drop-down menu 2 opened");
+			}
+		});
+		
+		jcb3.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				label.setText("Drop-down menu 3 opened");
+			}
+		});
+		
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+}
+
+=========================================================================================
+
+public class Main
+{
+	public static void main(String[] args)
+	{
+		CompTest test = new CompTest();
+		test.setVisible(true);
+	}
+}

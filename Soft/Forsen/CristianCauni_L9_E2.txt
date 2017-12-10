@@ -1,0 +1,66 @@
+/* Cristian Cauni - Group E_2031
+ * Write a Swing-based Java application which enbles the user to select files from the local file system. 
+ * More than one file can be selected, and the names of the files along with their path will be displayed 
+ * in a label component (JLabel). 
+ * */
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.event.*;
+
+public class fileBrowser extends JFrame implements WindowListener
+{
+	fileBrowser()
+	{
+		this.setSize(600, 600);
+		this.setTitle("File Browser");
+		this.setVisible(true);
+
+		JPanel panel = new JPanel();
+		JLabel fileName = new JLabel();
+		JLabel filePath = new JLabel();
+	    panel.add(fileName);
+	    panel.add(filePath); 
+	    this.add(panel);
+		
+		
+		JFileChooser chooser = new JFileChooser();
+	    FileNameExtensionFilter fnef = new FileNameExtensionFilter("GIF & JPG images", "txt", "jpg", "gif");
+	    chooser.setFileFilter(fnef);
+	    int returnVal = chooser.showOpenDialog(getParent());
+	    if(returnVal == JFileChooser.APPROVE_OPTION) 
+	    {
+	       fileName.setText("The file you selected is: " + chooser.getSelectedFile().getName() );
+	       filePath.setText("The path of the selected file is: " + chooser.getSelectedFile().getAbsolutePath());
+	    }
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {}
+
+	@Override
+	public void windowClosing(WindowEvent e) 
+	{
+		System.exit(1);
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {}
+
+	@Override
+	public void windowIconified(WindowEvent e) {}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {}
+
+	@Override
+	public void windowActivated(WindowEvent e) {}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {}
+	
+	public static void main(String[] args)
+	{
+		fileBrowser ob1 = new fileBrowser();
+	}
+}
