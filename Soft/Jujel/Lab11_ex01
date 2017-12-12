@@ -1,0 +1,136 @@
+/---------------------------------------SERVER.JAVA----------------------------------------------/
+
+/* 1. Să se scrie o aplicație client-server în cadrul căreia clientul
+ * trimite două mesaje ce conțin numele vostru și grupa din care faceti
+ * parte. Serverul va răspunde cu mesajul: ”Salut [nume] din grupa [grupa]".
+ * Folosiți o conexiune cu confirmare (TCP/IP) și una fără confirmare (UDP). */
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+ 
+public class Server
+{
+ 
+    private static Socket socket;
+ 
+    public static void main(String[] args)
+    {
+        try
+        {
+ 
+            int port = 25000;
+            ServerSocket serverSocket = new ServerSocket(port);
+            System.out.println("Server Started and listening to the port 25000");
+ 
+            //Server is running always. This is done using this while(true) loop
+            while(true)
+            {
+                //Reading the message from the client
+                socket = serverSocket.accept();
+                InputStream is = socket.getInputStream();
+                InputStreamReader isr = new InputStreamReader(is);
+                BufferedReader br = new BufferedReader(isr);
+                String nume = br.readLine();
+                String grupa = br.readLine();
+                System.out.println("Name received from client is "+nume);
+                System.out.println("Group received from client is "+grupa);
+ 
+                String returnMessage = "Salut " + nume + " din grupa " + grupa + "! " + "\n" ;
+                
+                //Sending the response back to the client.
+                OutputStream os = socket.getOutputStream();
+                OutputStreamWriter osw = new OutputStreamWriter(os);
+                BufferedWriter bw = new BufferedWriter(osw);
+                bw.write(returnMessage);
+                System.out.println("Message sent to the client is "+returnMessage);
+                bw.flush();
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                socket.close();
+            }
+            catch(Exception e){}
+        }
+    }
+}
+
+
+/--------------------------------------CLIENT.JAVA------------------------------------------/
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.InetAddress;
+import java.net.Socket;
+
+public class Client
+{
+ 
+    private static Socket socket;
+ 
+    public static void main(String args[])
+    {
+    	String nume = " ";
+    	String grupa = " ";
+        try
+        {
+            String host = "localhost";
+            int port = 25000;
+            InetAddress address = InetAddress.getByName(host);
+            socket = new Socket(address, port);
+ 
+            //Send the message to the server
+            OutputStream os = socket.getOutputStream();
+            OutputStreamWriter osw = new OutputStreamWriter(os);
+            BufferedWriter bw = new BufferedWriter(osw);
+ 
+            nume = "Lucaci George";
+            grupa = "E_2031";
+ 
+            String sendName = nume + "\n";
+            String sendGroup = grupa + "\n";
+            bw.write(sendName + sendGroup);
+            bw.flush();
+            System.out.println("Message sent to the server : " +sendName + " " + sendGroup);
+ 
+            //Get the return message from the server
+            InputStream is = socket.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader br = new BufferedReader(isr);
+            String message = br.readLine();
+            System.out.println("Message received from the server : " +message);
+        }
+        catch (Exception exception)
+        {
+            exception.printStackTrace();
+        }
+        finally
+        {
+            //Closing the socket
+            try
+            {
+                socket.close();
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+}
